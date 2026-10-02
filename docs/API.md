@@ -19,3 +19,5 @@ E-commerce backend with a conversational assistant. Every response uses the enve
 | GET | `/api/v1/orders/{id}` | bearer | `id` | — | 200 | One of the caller's orders (404 for anyone else's). |
 | GET | `/api/v1/me` | bearer | — | — | 200 | The authenticated customer. |
 | POST | `/api/v1/assistant/chat` | bearer | — | `ChatRequestDto` | 200 | Ask the shopping assistant. Bearer token optional (needed for orders); only the starter can continue a conversation. Send `confirmQuoteId` to place an order the assistant prepared. |
+| POST | `/api/v1/admin/imports` | admin key | — | `CreateImportDto` | 201 | Import products from a CSV or Google Sheets link, upserting by SKU. Dry run by default: review `preview` and `errors`, then send the same link with `dryRun: false` (and optionally `previewId`, to require the content you reviewed) to apply. |
+| GET | `/api/v1/admin/imports/{id}` | admin key | `id` | — | 200 | A past import's result. |

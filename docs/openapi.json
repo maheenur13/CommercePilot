@@ -738,6 +738,133 @@
           "assistant"
         ]
       }
+    },
+    "/api/v1/admin/imports": {
+      "post": {
+        "operationId": "ImportsController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateImportDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "success",
+                    "data",
+                    "meta"
+                  ],
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/ImportJobResponseDto"
+                    },
+                    "meta": {
+                      "$ref": "#/components/schemas/MetaDto"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error envelope (4xx/5xx)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelopeDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "admin-key": []
+          }
+        ],
+        "summary": "Import products from a CSV or Google Sheets link, upserting by SKU. Dry run by default:\nreview `preview` and `errors`, then send the same link with `dryRun: false` (and optionally\n`previewId`, to require the content you reviewed) to apply.",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/imports/{id}": {
+      "get": {
+        "operationId": "ImportsController_get",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "success",
+                    "data",
+                    "meta"
+                  ],
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/ImportJobResponseDto"
+                    },
+                    "meta": {
+                      "$ref": "#/components/schemas/MetaDto"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error envelope (4xx/5xx)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelopeDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "admin-key": []
+          }
+        ],
+        "summary": "A past import's result.",
+        "tags": [
+          "admin"
+        ]
+      }
     }
   },
   "info": {
@@ -1369,6 +1496,178 @@
             "format": "uuid"
           }
         }
+      },
+      "ImportRowErrorDto": {
+        "type": "object",
+        "properties": {
+          "row": {
+            "type": "number",
+            "description": "Spreadsheet line number (the header is line 1)."
+          },
+          "field": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "row",
+          "field",
+          "message"
+        ]
+      },
+      "ImportPreviewRowDto": {
+        "type": "object",
+        "properties": {
+          "row": {
+            "type": "number"
+          },
+          "action": {
+            "type": "string",
+            "description": "What applying does: create a new product or update the one with this SKU.",
+            "enum": [
+              "create",
+              "update"
+            ]
+          },
+          "sku": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "description": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "brand": {
+            "type": "string"
+          },
+          "stock": {
+            "type": "number",
+            "description": "Applied only when the product is created; existing stock is never overwritten."
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "attributes": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "row",
+          "action",
+          "sku",
+          "name",
+          "price",
+          "attributes"
+        ]
+      },
+      "ImportJobResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "sourceUrl": {
+            "type": "string"
+          },
+          "status": {
+            "description": "PREVIEW: dry run, nothing written. APPLIED: valid rows were upserted by SKU.",
+            "enum": [
+              "PREVIEW",
+              "APPLIED"
+            ],
+            "type": "string"
+          },
+          "totalRows": {
+            "type": "number",
+            "description": "Data rows in the file."
+          },
+          "created": {
+            "type": "number",
+            "description": "Rows created (or that would be, for a preview)."
+          },
+          "updated": {
+            "type": "number",
+            "description": "Rows updated (or that would be, for a preview)."
+          },
+          "skipped": {
+            "type": "number",
+            "description": "Rows rejected by validation; see `errors`."
+          },
+          "columnMap": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "CSV header -> product field. Unmapped columns are stored in `attributes`."
+          },
+          "errors": {
+            "description": "Row errors, capped at the first 200.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ImportRowErrorDto"
+            }
+          },
+          "preview": {
+            "description": "The first 20 valid rows as they would be written.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ImportPreviewRowDto"
+            }
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "sourceUrl",
+          "status",
+          "totalRows",
+          "created",
+          "updated",
+          "skipped",
+          "columnMap",
+          "errors",
+          "preview",
+          "createdAt"
+        ]
+      },
+      "CreateImportDto": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "A public CSV link or a Google Sheets link (shared \"Anyone with the link\").",
+            "maxLength": 2048,
+            "format": "uri"
+          },
+          "dryRun": {
+            "type": "boolean",
+            "description": "Validate and preview without writing. Defaults to true; send `false` to apply.",
+            "default": true
+          },
+          "previewId": {
+            "type": "string",
+            "description": "Optional, when applying: the id of the dry run you reviewed. The apply is refused\n(409 IMPORT_SOURCE_CHANGED) if the link no longer serves the same file.",
+            "maxLength": 64
+          }
+        },
+        "required": [
+          "url"
+        ]
       }
     }
   }

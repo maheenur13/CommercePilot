@@ -13,13 +13,14 @@ No `.env` is required for this to work: the compose file has safe local defaults
 
 ## Optional configuration
 
-| Variable             | Where               | Purpose                                                                         |
-| -------------------- | ------------------- | ------------------------------------------------------------------------------- |
-| `OPENROUTER_API_KEY` | shell env or `.env` | Model key for the assistant (Tasks 1–3). Without it, assistant endpoints → 503. |
-| `ADMIN_API_KEY`      | `.env` (zip root)   | Operator key for `/api/v1/admin/*`. Default: `local-dev-admin-key-change-me`.   |
-| `API_PORT`/`DB_PORT` | shell env           | Host ports if 3000 / 5432 are taken.                                            |
-| `LLM_MODEL`          | shell env or `.env` | Defaults to `openai/gpt-4o-mini` via OpenRouter.                                |
-| `LLM_BASE_URL`       | shell env or `.env` | OpenAI-compatible API base. Default `https://openrouter.ai/api/v1`.             |
+| Variable               | Where               | Purpose                                                                               |
+| ---------------------- | ------------------- | ------------------------------------------------------------------------------------- |
+| `OPENROUTER_API_KEY`   | shell env or `.env` | Model key for the assistant (Tasks 1–3). Without it, assistant endpoints → 503.       |
+| `ADMIN_API_KEY`        | `.env` (zip root)   | Operator key for `/api/v1/admin/*`. Default: `local-dev-admin-key-change-me`.         |
+| `API_PORT`/`DB_PORT`   | shell env           | Host ports if 3000 / 5432 are taken.                                                  |
+| `LLM_MODEL`            | shell env or `.env` | Defaults to `openai/gpt-4o-mini` via OpenRouter.                                      |
+| `LLM_BASE_URL`         | shell env or `.env` | OpenAI-compatible API base. Default `https://openrouter.ai/api/v1`.                   |
+| `IMPORT_ALLOWED_HOSTS` | tests only          | `host:port` pairs the importer may fetch despite a private IP. Refused in production. |
 
 ```bash
 OPENROUTER_API_KEY=sk-or-... docker compose up --build
@@ -63,6 +64,21 @@ curl -X POST localhost:3000/api/v1/assistant/chat -H "$AUTH" -H "content-type: a
 # → data.pendingOrder.quoteId; then confirm it (no model call):
 curl -X POST localhost:3000/api/v1/assistant/chat -H "$AUTH" -H "content-type: application/json" \
   -d '{"conversationId":"<data.conversationId>","confirmQuoteId":"<data.pendingOrder.quoteId>"}'
+```
+
+**Import products from a link** (admin key). It is a dry run by default: check `preview` and `errors`, then send
+the same link with `"dryRun": false` to apply. A Google Sheet must be shared "Anyone with the link"; paste its normal
+`/edit#gid=…` URL. The fixtures can be imported straight from the public repo:
+
+```bash
+ADMIN="x-admin-key: local-dev-admin-key-change-me"
+URL=https://raw.githubusercontent.com/maheenur13/CommercePilot/main/fixtures/imports/messy-headers.csv
+curl -X POST localhost:3000/api/v1/admin/imports -H "$ADMIN" -H "content-type: application/json" \
+  -d "{\"url\":\"$URL\"}"                    # → status PREVIEW, columnMap, preview, errors
+curl -X POST localhost:3000/api/v1/admin/imports -H "$ADMIN" -H "content-type: application/json" \
+  -d "{\"url\":\"$URL\",\"dryRun\":false}"   # → status APPLIED, created / updated / skipped
+curl -H "$ADMIN" localhost:3000/api/v1/admin/imports/<data.id>
+# optional: add "previewId":"<dry run data.id>" to the apply to refuse it if the file changed since the preview
 ```
 
 Every response uses one envelope (details in `docs/adr/0003-response-contract-and-versioning.md`):

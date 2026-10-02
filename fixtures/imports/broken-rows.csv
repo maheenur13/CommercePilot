@@ -1,0 +1,9 @@
+sku,name,price,stock,currency
+IMPDEMO-201,Valid Widget,9.99,5,USD
+IMPDEMO-202,,9.99,5,USD
+IMPDEMO-203,Bad Price Widget,abc,5,USD
+IMPDEMO-204,Negative Stock Widget,9.99,-3,USD
+bad sku!,Bad Sku Widget,9.99,5,USD
+IMPDEMO-206,Ambiguous Price Widget,"1,299",5,USD
+IMPDEMO-207,Bad Currency Widget,9.99,5,DOLLARS
+IMPDEMO-208,Negative Price Widget,-5.00,5,USD

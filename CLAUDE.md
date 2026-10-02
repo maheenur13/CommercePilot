@@ -17,6 +17,7 @@ and operator bulk import from a link. NestJS 12 (ESM) · TypeScript strict · Pr
 `src/<feature>/` = module + controller (HTTP + DTO mapping) + service (rules) + `dto/` (input + `*-response.dto.ts`).
 Shared: `src/common/` (auth, Prisma, `http/` envelope + money). `public/` = static demo chat page at `/chat`.
 Assistant: `src/assistant/` (`LlmClient` fetch wrapper, `tools.ts` zod schemas + `runTool`, service = tool loop).
+Imports: `src/imports/` (`safe-fetch.ts` SSRF-guarded GET, `rows.ts` pure parse/map/validate, service = preview/apply).
 Tests live in `tests/{unit,e2e,evals}` (not colocated); e2e fakes the model with `ScriptedLlm` (`tests/e2e/helpers.ts`). Seed data in `fixtures/`, loaded by `prisma/seed.ts`.
 
 ## Non-negotiable rules

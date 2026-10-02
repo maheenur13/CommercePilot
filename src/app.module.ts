@@ -11,6 +11,7 @@ import { PrismaModule } from './common/prisma.module.js';
 import { validateEnv } from './config/env.js';
 import { CustomersModule } from './customers/customers.module.js';
 import { HealthController } from './health/health.controller.js';
+import { ImportsModule } from './imports/imports.module.js';
 import { OrdersModule } from './orders/orders.module.js';
 import { ProductsModule } from './products/products.module.js';
 
@@ -39,6 +40,7 @@ import { ProductsModule } from './products/products.module.js';
     OrdersModule,
     CustomersModule,
     AssistantModule,
+    ImportsModule,
   ],
   controllers: [HealthController],
   providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],

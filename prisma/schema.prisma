@@ -126,3 +126,28 @@ model OrderItem {
 
   @@index([orderId])
 }
+
+enum ImportStatus {
+  PREVIEW
+  APPLIED
+}
+
+/// One operator import from a link. Fetch/parse failures are 4xx responses and never create a job.
+model ImportJob {
+  id         String       @id @default(cuid())
+  sourceUrl  String
+  status     ImportStatus
+  /// SHA-256 of the fetched file; applying with `previewId` requires the same content.
+  contentSha256 String
+  totalRows  Int
+  created    Int
+  updated    Int
+  skipped    Int
+  /// Header -> product field, as resolved (aliases or model fallback).
+  columnMap  Json
+  /// [{ row, field, message }], capped; `skipped` is the full count.
+  errors     Json
+  /// First rows as they would be written, with `action: create|update`.
+  preview    Json
+  createdAt  DateTime     @default(now())
+}

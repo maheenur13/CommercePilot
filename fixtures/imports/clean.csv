@@ -1,0 +1,5 @@
+sku,name,description,category,brand,price,stock,color
+IMPDEMO-001,Trailhead Insulated Bottle 750ml,Double-wall steel bottle that keeps drinks cold for 24 hours.,Outdoor,Trailhead,24.99,40,Forest green
+IMPDEMO-002,Trailhead Camp Mug,Enamel camp mug with a stay-cool rim.,Outdoor,Trailhead,12.50,75,Ivory
+IMPDEMO-003,Lumen Clip Reading Light,Rechargeable clip-on LED reading light with three brightness levels.,Home,Lumen,18.00,30,Black
+IMPDEMO-004,Lumen Desk Lamp Pro,"Dimmable desk lamp with USB-C charging port, 1,000 lumens.",Home,Lumen,"$1,299.00",3,Silver
