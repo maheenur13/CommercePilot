@@ -43,7 +43,9 @@ export function renderApiMarkdown(doc: OpenAPIObject): string {
       const ref = (op.requestBody as { content?: Record<string, { schema?: { $ref?: string } }> })
         ?.content?.['application/json']?.schema?.$ref;
       const body = ref ? `\`${ref.split('/').pop()}\`` : '—';
-      const summary = (op.summary ?? op.description ?? '').replace(/\|/g, '\\|');
+      const summary = (op.summary ?? op.description ?? '')
+        .replace(/\s+/g, ' ')
+        .replace(/\|/g, '\\|');
       rows.push(
         `| ${method.toUpperCase()} | \`${path}\` | ${auth} | ${params || '—'} | ${body} | ${success} | ${summary} |`,
       );

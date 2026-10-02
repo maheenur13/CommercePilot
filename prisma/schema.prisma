@@ -39,6 +39,7 @@ model Customer {
   createdAt     DateTime       @default(now())
   orders        Order[]
   conversations Conversation[]
+  orderQuotes   OrderQuote[]
 }
 
 /// An assistant chat. `customerId` is null for anonymous chats; only the owner may continue one.
@@ -85,8 +86,32 @@ model Order {
   currency   String      @default("USD") @db.Char(3)
   createdAt  DateTime    @default(now())
   items      OrderItem[]
+  quote      OrderQuote?
 
   @@index([customerId, createdAt])
+}
+
+/// A server-issued order quote from the assistant. Confirming one (by the client, with its id)
+/// is the only way chat places an order; the model can create quotes but never confirm them.
+/// The id is a random UUIDv4 because the client presents it back as the confirmation.
+// ponytail: expired quotes are deleted only when the same customer requests a new one; add a
+// periodic cleanup if inactive customers' leftovers ever matter.
+model OrderQuote {
+  id          String    @id @default(uuid())
+  customerId  String
+  customer    Customer  @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  /// [{ productId, quantity, unitPriceCents }], merged and sorted like an order's lines.
+  lines       Json
+  totalCents  Int
+  currency    String    @db.Char(3)
+  expiresAt   DateTime
+  /// Set when a confirmation claims the quote; serialises concurrent confirms.
+  confirmedAt DateTime?
+  orderId     String?   @unique
+  order       Order?    @relation(fields: [orderId], references: [id])
+  createdAt   DateTime  @default(now())
+
+  @@index([customerId])
 }
 
 model OrderItem {

@@ -3,6 +3,7 @@ import 'reflect-metadata';
 import type { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import request from 'supertest';
+import { afterAll, beforeAll, beforeEach } from 'vitest';
 
 import { AppModule } from '../../src/app.module.js';
 import { configureApp } from '../../src/app.setup.js';
@@ -13,6 +14,7 @@ import type {
   ToolSpec,
 } from '../../src/assistant/llm.client.js';
 import { LlmClient } from '../../src/assistant/llm.client.js';
+import { PrismaService } from '../../src/common/prisma.module.js';
 
 type Step = Completion | ((messages: ChatMessage[]) => Completion);
 
@@ -99,4 +101,31 @@ export async function createProduct(
     })
     .expect(201);
   return res.body.data;
+}
+
+export const toolMessages = (messages: ChatMessage[]) =>
+  messages.filter((m): m is Extract<ChatMessage, { role: 'tool' }> => m.role === 'tool');
+
+/**
+ * A fresh app per suite. The chat route allows 20 requests/min per client, so each suite stays
+ * under that budget instead of all chat tests sharing one throttler counter.
+ */
+export function chatHarness() {
+  const h = {
+    app: undefined as unknown as INestApplication,
+    prisma: undefined as unknown as PrismaService,
+  };
+  const llm = new ScriptedLlm();
+  const chat = (body: object, token?: string) => {
+    const req = request(h.app.getHttpServer()).post(v1('/assistant/chat'));
+    if (token) req.set('Authorization', `Bearer ${token}`);
+    return req.send(body);
+  };
+  beforeAll(async () => {
+    h.app = await createApp({ llm });
+    h.prisma = h.app.get(PrismaService);
+  });
+  afterAll(() => h.app.close());
+  beforeEach(() => llm.script());
+  return { h, llm, chat };
 }

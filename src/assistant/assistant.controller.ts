@@ -8,7 +8,7 @@ import {
   OptionalCustomerAuthGuard,
 } from '../common/auth/auth.js';
 import { ApiEnvelope } from '../common/http/envelope.js';
-import { AssistantService } from './assistant.service.js';
+import { AssistantService, CONFIRM_MESSAGE } from './assistant.service.js';
 import { ChatRequestDto } from './dto/chat.dto.js';
 import { ChatResponseDto, toChatResponse } from './dto/chat-response.dto.js';
 
@@ -19,7 +19,10 @@ import { ChatResponseDto, toChatResponse } from './dto/chat-response.dto.js';
 export class AssistantController {
   constructor(private readonly assistant: AssistantService) {}
 
-  /** Ask the catalog assistant. Bearer token optional; only the starter can continue a conversation. */
+  /**
+   * Ask the shopping assistant. Bearer token optional (needed for orders); only the starter can
+   * continue a conversation. Send `confirmQuoteId` to place an order the assistant prepared.
+   */
   @Post('chat')
   @HttpCode(200)
   // Model calls cost money: tighter than the global limit.
@@ -29,6 +32,11 @@ export class AssistantController {
     @OptionalCustomer() customer: AuthedCustomer | null,
     @Body() dto: ChatRequestDto,
   ): Promise<ChatResponseDto> {
-    return toChatResponse(await this.assistant.chat(customer, dto.message, dto.conversationId));
+    const result = await this.assistant.chat(customer, {
+      message: dto.message ?? CONFIRM_MESSAGE,
+      conversationId: dto.conversationId,
+      confirmQuoteId: dto.confirmQuoteId,
+    });
+    return toChatResponse(result);
   }
 }

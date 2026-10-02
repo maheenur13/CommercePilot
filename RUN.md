@@ -53,6 +53,18 @@ curl -X POST localhost:3000/api/v1/assistant/chat -H "content-type: application/
   -d '{"message":"Which noise-cancelling headphones do you have under $200?"}'
 ```
 
+To order through chat, sign in. The assistant prepares a quote (`data.pendingOrder`), and only your confirmation
+places it. The model can't place it:
+
+```bash
+AUTH="Authorization: Bearer demo-alice-7f3k9q2m5x8v1b4n"
+curl -X POST localhost:3000/api/v1/assistant/chat -H "$AUTH" -H "content-type: application/json" \
+  -d '{"message":"I want to buy 2 Brewcraft Burr Coffee Grinders"}'
+# → data.pendingOrder.quoteId; then confirm it (no model call):
+curl -X POST localhost:3000/api/v1/assistant/chat -H "$AUTH" -H "content-type: application/json" \
+  -d '{"conversationId":"<data.conversationId>","confirmQuoteId":"<data.pendingOrder.quoteId>"}'
+```
+
 Every response uses one envelope (details in `docs/adr/0003-response-contract-and-versioning.md`):
 
 ```json

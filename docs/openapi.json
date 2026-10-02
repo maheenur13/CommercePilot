@@ -733,7 +733,7 @@
             "bearer": []
           }
         ],
-        "summary": "Ask the catalog assistant. Bearer token optional; only the starter can continue a conversation.",
+        "summary": "Ask the shopping assistant. Bearer token optional (needed for orders); only the starter can\ncontinue a conversation. Send `confirmQuoteId` to place an order the assistant prepared.",
         "tags": [
           "assistant"
         ]
@@ -1245,6 +1245,34 @@
           "name"
         ]
       },
+      "QuoteResponseDto": {
+        "type": "object",
+        "properties": {
+          "quoteId": {
+            "type": "string",
+            "description": "Send back as `confirmQuoteId` to place the order. Only the shopper can confirm it."
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderItemResponseDto"
+            }
+          },
+          "total": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "expiresAt": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "quoteId",
+          "items",
+          "total",
+          "expiresAt"
+        ]
+      },
       "CitedProductDto": {
         "type": "object",
         "properties": {
@@ -1280,6 +1308,26 @@
       "ChatResponseDto": {
         "type": "object",
         "properties": {
+          "pendingOrder": {
+            "nullable": true,
+            "description": "An order the assistant priced this turn. Nothing is placed until the shopper confirms it.",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/QuoteResponseDto"
+              }
+            ]
+          },
+          "placedOrder": {
+            "nullable": true,
+            "description": "The order placed by a `confirmQuoteId` request.",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/OrderResponseDto"
+              }
+            ]
+          },
           "conversationId": {
             "type": "string"
           },
@@ -1295,6 +1343,8 @@
           }
         },
         "required": [
+          "pendingOrder",
+          "placedOrder",
           "conversationId",
           "reply",
           "citedProducts"
@@ -1310,13 +1360,15 @@
           },
           "message": {
             "type": "string",
-            "description": "The shopper's message.",
+            "description": "The shopper's message. Optional only when confirming a quote.",
             "maxLength": 1000
+          },
+          "confirmQuoteId": {
+            "type": "string",
+            "description": "Place the order from a `pendingOrder` the assistant prepared (signed-in shoppers only).\nThe server confirms it without calling the model.",
+            "format": "uuid"
           }
-        },
-        "required": [
-          "message"
-        ]
+        }
       }
     }
   }

@@ -1,6 +1,6 @@
 import type { INestApplication } from '@nestjs/common';
 import request from 'supertest';
-import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
+import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import {
   MAX_TOOL_CALLS_PER_ROUND,
@@ -8,38 +8,20 @@ import {
   FALLBACK_REPLY,
   SYSTEM_PROMPT,
 } from '../../src/assistant/assistant.service.js';
-import type { ChatMessage } from '../../src/assistant/llm.client.js';
 import { PrismaService } from '../../src/common/prisma.module.js';
-import { callTool, createApp, createProduct, say, ScriptedLlm, TOKENS, v1 } from './helpers.js';
-
-const toolMessages = (messages: ChatMessage[]) =>
-  messages.filter((m): m is Extract<ChatMessage, { role: 'tool' }> => m.role === 'tool');
+import {
+  callTool,
+  chatHarness,
+  toolMessages,
+  createApp,
+  createProduct,
+  say,
+  ScriptedLlm,
+  TOKENS,
+  v1,
+} from './helpers.js';
 
 const uniqueName = (base: string) => `${base} ${crypto.randomUUID().slice(0, 8)}`;
-
-/**
- * A fresh app per suite. The chat route allows 20 requests/min per client, so each suite stays
- * under that budget instead of all chat tests sharing one throttler counter.
- */
-function chatHarness() {
-  const h = {
-    app: undefined as unknown as INestApplication,
-    prisma: undefined as unknown as PrismaService,
-  };
-  const llm = new ScriptedLlm();
-  const chat = (body: object, token?: string) => {
-    const req = request(h.app.getHttpServer()).post(v1('/assistant/chat'));
-    if (token) req.set('Authorization', `Bearer ${token}`);
-    return req.send(body);
-  };
-  beforeAll(async () => {
-    h.app = await createApp({ llm });
-    h.prisma = h.app.get(PrismaService);
-  });
-  afterAll(() => h.app.close());
-  beforeEach(() => llm.script());
-  return { h, llm, chat };
-}
 
 describe('Assistant chat: answers, ownership, validation', () => {
   const { h, llm, chat } = chatHarness();

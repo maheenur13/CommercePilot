@@ -1,6 +1,6 @@
 # ADR 0005: The assistant grounds answers with tool calls, not RAG or catalog stuffing
 
-**Status:** accepted (Task 1; Task 2 adds tools to the same loop)
+**Status:** accepted (Task 1; Task 2 adds order tools to the same loop, see [ADR 0006](0006-order-confirmation-by-client-token.md))
 
 ## Context
 
