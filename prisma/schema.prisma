@@ -31,13 +31,42 @@ model Product {
 }
 
 model Customer {
-  id           String   @id @default(cuid())
-  email        String   @unique
-  name         String
+  id            String         @id @default(cuid())
+  email         String         @unique
+  name          String
   /// SHA-256 of the customer's API token; the raw token is never stored.
-  apiTokenHash String   @unique
-  createdAt    DateTime @default(now())
-  orders       Order[]
+  apiTokenHash  String         @unique
+  createdAt     DateTime       @default(now())
+  orders        Order[]
+  conversations Conversation[]
+}
+
+/// An assistant chat. `customerId` is null for anonymous chats; only the owner may continue one.
+/// The id is a random UUIDv4 (not a cuid) because for anonymous chats it is the only credential.
+model Conversation {
+  id         String    @id @default(uuid())
+  customerId String?
+  /// Cascade, not SetNull: a deleted customer's chats must not turn into anonymous, id-only ones.
+  customer   Customer? @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  createdAt  DateTime  @default(now())
+  messages   Message[]
+}
+
+enum MessageRole {
+  USER
+  ASSISTANT
+}
+
+/// Only user/assistant text is stored; tool output is re-fetched each turn so it is never stale.
+model Message {
+  id             String       @id @default(cuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  role           MessageRole
+  content        String
+  createdAt      DateTime     @default(now())
+
+  @@index([conversationId, createdAt])
 }
 
 enum OrderStatus {

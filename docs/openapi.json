@@ -58,7 +58,7 @@
             "name": "q",
             "required": false,
             "in": "query",
-            "description": "Free-text search over name, description, brand and category.",
+            "description": "Free-text search over name, SKU, description, brand and category.",
             "schema": {
               "maxLength": 100,
               "type": "string"
@@ -674,6 +674,70 @@
           "customers"
         ]
       }
+    },
+    "/api/v1/assistant/chat": {
+      "post": {
+        "operationId": "AssistantController_chat",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "success",
+                    "data",
+                    "meta"
+                  ],
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/ChatResponseDto"
+                    },
+                    "meta": {
+                      "$ref": "#/components/schemas/MetaDto"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error envelope (4xx/5xx)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelopeDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Ask the catalog assistant. Bearer token optional; only the starter can continue a conversation.",
+        "tags": [
+          "assistant"
+        ]
+      }
     }
   },
   "info": {
@@ -1179,6 +1243,79 @@
           "id",
           "email",
           "name"
+        ]
+      },
+      "CitedProductDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "sku": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "description": "Current catalog price from the database, not from the model's text.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/MoneyDto"
+              }
+            ]
+          },
+          "inStock": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "sku",
+          "name",
+          "price",
+          "inStock"
+        ]
+      },
+      "ChatResponseDto": {
+        "type": "object",
+        "properties": {
+          "conversationId": {
+            "type": "string"
+          },
+          "reply": {
+            "type": "string"
+          },
+          "citedProducts": {
+            "description": "Products the reply mentions, limited to ones the assistant looked up this turn.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CitedProductDto"
+            }
+          }
+        },
+        "required": [
+          "conversationId",
+          "reply",
+          "citedProducts"
+        ]
+      },
+      "ChatRequestDto": {
+        "type": "object",
+        "properties": {
+          "conversationId": {
+            "type": "string",
+            "description": "Continue an existing conversation (must belong to the caller). Omit to start a new one.",
+            "maxLength": 64
+          },
+          "message": {
+            "type": "string",
+            "description": "The shopper's message.",
+            "maxLength": 1000
+          }
+        },
+        "required": [
+          "message"
         ]
       }
     }

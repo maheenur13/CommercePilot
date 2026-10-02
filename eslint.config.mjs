@@ -5,7 +5,17 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  { ignores: ['dist', 'coverage', 'src/generated', 'eslint.config.mjs', 'commitlint.config.mjs'] },
+  {
+    ignores: [
+      'dist',
+      'coverage',
+      'src/generated',
+      'eslint.config.mjs',
+      'commitlint.config.mjs',
+      // Plain browser script outside the TS project; the type-checked rules can't apply to it.
+      'public',
+    ],
+  },
   eslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
   {

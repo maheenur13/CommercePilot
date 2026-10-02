@@ -18,3 +18,4 @@ E-commerce backend with a conversational assistant. Every response uses the enve
 | POST | `/api/v1/orders` | bearer | — | `CreateOrderDto` | 201 | Places an order. Prices and totals are resolved server-side. |
 | GET | `/api/v1/orders/{id}` | bearer | `id` | — | 200 | One of the caller's orders (404 for anyone else's). |
 | GET | `/api/v1/me` | bearer | — | — | 200 | The authenticated customer. |
+| POST | `/api/v1/assistant/chat` | bearer | — | `ChatRequestDto` | 200 | Ask the catalog assistant. Bearer token optional; only the starter can continue a conversation. |

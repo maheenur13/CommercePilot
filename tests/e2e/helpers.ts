@@ -6,6 +6,53 @@ import request from 'supertest';
 
 import { AppModule } from '../../src/app.module.js';
 import { configureApp } from '../../src/app.setup.js';
+import type {
+  ChatMessage,
+  Completion,
+  ToolChoice,
+  ToolSpec,
+} from '../../src/assistant/llm.client.js';
+import { LlmClient } from '../../src/assistant/llm.client.js';
+
+type Step = Completion | ((messages: ChatMessage[]) => Completion);
+
+/** Fake model: plays back scripted steps in order and records every request it receives. */
+export class ScriptedLlm {
+  readonly requests: { messages: ChatMessage[]; tools: ToolSpec[]; toolChoice: ToolChoice }[] = [];
+  private steps: Step[] = [];
+
+  script(...steps: Step[]): this {
+    this.steps = steps;
+    this.requests.length = 0;
+    return this;
+  }
+
+  complete(
+    messages: ChatMessage[],
+    tools: ToolSpec[],
+    toolChoice: ToolChoice = 'auto',
+  ): Promise<Completion> {
+    // Mirror the real API's contract so a request it would reject fails here too.
+    if (tools.length === 0)
+      throw new Error('ScriptedLlm: empty tools array is rejected by the API');
+    this.requests.push({ messages: structuredClone(messages), tools, toolChoice });
+    const step = this.steps.shift();
+    if (!step) throw new Error('ScriptedLlm: no step left');
+    return Promise.resolve(typeof step === 'function' ? step(messages) : step);
+  }
+}
+
+export const say = (content: string): Completion => ({ content, toolCalls: [] });
+export const callTool = (name: string, args: unknown, id = `call_${name}`): Completion => ({
+  content: null,
+  toolCalls: [
+    {
+      id,
+      type: 'function',
+      function: { name, arguments: typeof args === 'string' ? args : JSON.stringify(args) },
+    },
+  ],
+});
 
 export const ADMIN_KEY = 'test-admin-key-0123456789';
 export const TOKENS = {
@@ -16,8 +63,11 @@ export const TOKENS = {
 /** Prefix for versioned business routes. */
 export const v1 = (path: string) => `/api/v1${path}`;
 
-export async function createApp(): Promise<INestApplication> {
-  const moduleRef = await Test.createTestingModule({ imports: [AppModule] }).compile();
+/** `llm` replaces the real model client (see `ScriptedLlm`); never call a real model in tests. */
+export async function createApp(opts: { llm?: unknown } = {}): Promise<INestApplication> {
+  let builder = Test.createTestingModule({ imports: [AppModule] });
+  if (opts.llm) builder = builder.overrideProvider(LlmClient).useValue(opts.llm);
+  const moduleRef = await builder.compile();
   const app = moduleRef.createNestApplication();
   configureApp(app);
   await app.init();

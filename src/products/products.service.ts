@@ -27,6 +27,7 @@ export class ProductsService {
       ...(q && {
         OR: [
           { name: contains(q) },
+          { sku: contains(q) },
           { description: contains(q) },
           { brand: contains(q) },
           { category: contains(q) },

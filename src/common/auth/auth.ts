@@ -31,22 +31,34 @@ function bearerToken(req: Request): string | undefined {
  */
 @Injectable()
 export class CustomerAuthGuard implements CanActivate {
+  protected readonly optional: boolean = false;
+
   constructor(private readonly prisma: PrismaService) {}
 
   async canActivate(ctx: ExecutionContext): Promise<boolean> {
     const req = ctx.switchToHttp().getRequest<AuthedRequest>();
     const token = bearerToken(req);
-    if (!token) throw new UnauthorizedException('Missing bearer token');
+    if (!token) {
+      if (this.optional) return true;
+      throw new UnauthorizedException('Missing bearer token');
+    }
 
     const customer = await this.prisma.customer.findUnique({
       where: { apiTokenHash: hashToken(token) },
       select: { id: true, email: true, name: true },
     });
+    // A bad token is always a 401, never a silent downgrade to anonymous.
     if (!customer) throw new UnauthorizedException('Invalid token');
 
     req.customer = customer;
     return true;
   }
+}
+
+/** Like `CustomerAuthGuard`, but a request without a token proceeds as anonymous. */
+@Injectable()
+export class OptionalCustomerAuthGuard extends CustomerAuthGuard {
+  protected override readonly optional = true;
 }
 
 @Injectable()
@@ -69,4 +81,10 @@ export const CurrentCustomer = createParamDecorator(
     if (!customer) throw new UnauthorizedException();
     return customer;
   },
+);
+
+/** For routes behind `OptionalCustomerAuthGuard`: the customer, or null when anonymous. */
+export const OptionalCustomer = createParamDecorator(
+  (_: unknown, ctx: ExecutionContext): AuthedCustomer | null =>
+    ctx.switchToHttp().getRequest<AuthedRequest>().customer ?? null,
 );

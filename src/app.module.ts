@@ -6,6 +6,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { LoggerModule } from 'nestjs-pino';
 
+import { AssistantModule } from './assistant/assistant.module.js';
 import { PrismaModule } from './common/prisma.module.js';
 import { validateEnv } from './config/env.js';
 import { CustomersModule } from './customers/customers.module.js';
@@ -37,6 +38,7 @@ import { ProductsModule } from './products/products.module.js';
     ProductsModule,
     OrdersModule,
     CustomersModule,
+    AssistantModule,
   ],
   controllers: [HealthController],
   providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],

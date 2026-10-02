@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CommercePilot Chat</title>
+    <!-- Demo client for POST /api/v1/assistant/chat. The API is the product; this page is a thin tester. -->
+    <style>
+      :root {
+        --bg: #f6f7f9;
+        --panel: #ffffff;
+        --text: #1b1f24;
+        --muted: #5f6b7a;
+        --border: #dde2e8;
+        --accent: #2457d6;
+        --accent-text: #ffffff;
+        --user: #e8eefc;
+        --error: #b42318;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #0f1216;
+          --panel: #171b21;
+          --text: #e6e9ee;
+          --muted: #96a1b0;
+          --border: #2a313b;
+          --accent: #6b93ff;
+          --accent-text: #0f1216;
+          --user: #1f2a44;
+          --error: #ff8a80;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font:
+          15px/1.5 system-ui,
+          -apple-system,
+          'Segoe UI',
+          sans-serif;
+      }
+      main {
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        height: 100dvh;
+        gap: 12px;
+      }
+      header {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 16px;
+        align-items: center;
+        justify-content: space-between;
+      }
+      h1 {
+        font-size: 18px;
+        margin: 0;
+      }
+      .controls {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      select,
+      button,
+      textarea {
+        font: inherit;
+        color: var(--text);
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+      }
+      select,
+      button {
+        padding: 6px 10px;
+      }
+      button {
+        cursor: pointer;
+      }
+      button.primary {
+        background: var(--accent);
+        color: var(--accent-text);
+        border-color: var(--accent);
+      }
+      button:disabled {
+        opacity: 0.6;
+        cursor: progress;
+      }
+      #log {
+        flex: 1;
+        overflow-y: auto;
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .msg {
+        max-width: 85%;
+        padding: 10px 12px;
+        border-radius: 10px;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+      .user {
+        align-self: flex-end;
+        background: var(--user);
+      }
+      .assistant {
+        align-self: flex-start;
+        border: 1px solid var(--border);
+      }
+      .error {
+        align-self: flex-start;
+        color: var(--error);
+        font-size: 13px;
+      }
+      .cited {
+        margin-top: 8px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        white-space: normal;
+      }
+      .chip {
+        font-size: 12px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 2px 8px;
+        color: var(--muted);
+      }
+      .hint {
+        color: var(--muted);
+        font-size: 13px;
+        margin: 0;
+      }
+      form {
+        display: flex;
+        gap: 8px;
+      }
+      textarea {
+        flex: 1;
+        resize: none;
+        padding: 10px;
+        min-height: 44px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>CommercePilot assistant</h1>
+        <div class="controls">
+          <label for="who">Chat as</label>
+          <select id="who"></select>
+          <button id="reset" type="button">New chat</button>
+        </div>
+      </header>
+      <section id="log" aria-live="polite">
+        <p class="hint">
+          Ask about the catalog, e.g. "Which headphones have noise cancelling?" or "Anything for
+          running under $100?". Cited products show the current database price.
+        </p>
+      </section>
+      <form id="form">
+        <textarea id="input" maxlength="1000" placeholder="Type a message…" required></textarea>
+        <button class="primary" id="send" type="submit">Send</button>
+      </form>
+    </main>
+    <script src="chat.js"></script>
+  </body>
+</html>

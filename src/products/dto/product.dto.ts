@@ -17,7 +17,7 @@ import {
 import { PaginationQueryDto } from '../../common/pagination.dto.js';
 
 export class ListProductsQueryDto extends PaginationQueryDto {
-  /** Free-text search over name, description, brand and category. */
+  /** Free-text search over name, SKU, description, brand and category. */
   @IsOptional()
   @IsString()
   @MaxLength(100)

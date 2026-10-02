@@ -4,6 +4,9 @@ import {
   RequestMethod,
   ValidationPipe,
 } from '@nestjs/common';
+import { join } from 'node:path';
+
+import type { NestExpressApplication } from '@nestjs/platform-express';
 import type { ValidationError } from 'class-validator';
 import helmet from 'helmet';
 
@@ -25,6 +28,12 @@ function flatten(errors: ValidationError[], parent = ''): ErrorDetailDto[] {
 /** Shared by main.ts and e2e tests so tests exercise the exact production pipeline. */
 export function configureApp(app: INestApplication): void {
   app.use(helmet());
+  // Demo chat page at /chat (public/chat.html). Its script is a separate file, so helmet's
+  // default CSP (script-src 'self') applies unchanged.
+  (app as NestExpressApplication).useStaticAssets(join(process.cwd(), 'public'), {
+    extensions: ['html'],
+    index: false,
+  });
   // Business routes are versioned; infrastructure endpoints stay at the root.
   app.setGlobalPrefix(API_PREFIX, { exclude: [{ path: 'health', method: RequestMethod.GET }] });
   app.useGlobalPipes(

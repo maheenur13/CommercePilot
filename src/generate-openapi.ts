@@ -9,7 +9,6 @@ import { writeFileSync } from 'node:fs';
 
 import { NestFactory } from '@nestjs/core';
 
-import { AppModule } from './app.module.js';
 import { configureApp } from './app.setup.js';
 import { buildOpenApiDocument, renderApiMarkdown } from './openapi.js';
 
@@ -17,6 +16,9 @@ import { buildOpenApiDocument, renderApiMarkdown } from './openapi.js';
 process.env.DATABASE_URL ??= 'postgresql://docs:docs@127.0.0.1:1/docs';
 process.env.ADMIN_API_KEY ??= 'docs-generation-placeholder-key';
 process.env.NODE_ENV = 'test'; // silences request logging
+
+// Imported only now: static imports are hoisted, and ConfigModule validates env at import time.
+const { AppModule } = await import('./app.module.js');
 
 const app = await NestFactory.create(AppModule, { logger: false, abortOnError: false });
 configureApp(app);

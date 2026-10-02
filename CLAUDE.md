@@ -8,14 +8,16 @@ and operator bulk import from a link. NestJS 12 (ESM) · TypeScript strict · Pr
 - `docker compose up --build` — full stack from clean (migrates + seeds on start). API `:3000/api/v1`, Swagger `/docs`.
 - `docker compose up -d db` then `pnpm start:dev` — local dev (DB on host port 5432).
 - `pnpm lint` · `pnpm format:check` · `pnpm typecheck` · `pnpm test` (unit + e2e; e2e needs the db container).
+- `pnpm test:eval` — opt-in live-model evals (`tests/evals`, needs `OPENROUTER_API_KEY` + db container; never in CI).
 - `pnpm prisma migrate dev --name <change>` — schema change. Never `migrate reset` (denied).
 - `pnpm docs:api` — regenerate `docs/API.md` + `docs/openapi.json` after any API change (`pnpm docs:check` verifies).
 
 ## Layout
 
 `src/<feature>/` = module + controller (HTTP + DTO mapping) + service (rules) + `dto/` (input + `*-response.dto.ts`).
-Shared: `src/common/` (auth, Prisma, `http/` envelope + money).
-Tests live in `tests/{unit,e2e}` (not colocated). Seed data in `fixtures/`, loaded by `prisma/seed.ts`.
+Shared: `src/common/` (auth, Prisma, `http/` envelope + money). `public/` = static demo chat page at `/chat`.
+Assistant: `src/assistant/` (`LlmClient` fetch wrapper, `tools.ts` zod schemas + `runTool`, service = tool loop).
+Tests live in `tests/{unit,e2e,evals}` (not colocated); e2e fakes the model with `ScriptedLlm` (`tests/e2e/helpers.ts`). Seed data in `fixtures/`, loaded by `prisma/seed.ts`.
 
 ## Non-negotiable rules
 
