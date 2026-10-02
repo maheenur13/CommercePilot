@@ -1,0 +1,10 @@
+[
+  {
+    "email": "alice@example.com",
+    "name": "Alice Andersson",
+    "apiToken": "demo-alice-7f3k9q2m5x8v1b4n"
+  },
+  { "email": "bob@example.com", "name": "Bob Berg", "apiToken": "demo-bob-2p6r8t0w3y5u7i9o" },
+  { "email": "carol@example.com", "name": "Carol Chen", "apiToken": "demo-carol-4h6j8l1z3c5v7n9m" },
+  { "email": "dan@example.com", "name": "Dan Dahl", "apiToken": "demo-dan-9a1s3d5f7g2h4j6k" }
+]

@@ -1,0 +1,15 @@
+node_modules
+dist
+coverage
+src/generated
+*.log
+.DS_Store
+.env
+.env.*
+!.env.example
+.claude/settings.local.json
+submission.zip
+
+# Raw AI session logs ship in the submission zip only (they contain local environment details).
+transcripts/
+

@@ -1,0 +1,6 @@
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Public demo tokens for seeded test customers (documented in RUN.md, not secrets)"
+paths = ['''fixtures/customers\.json''', '''tests/e2e/helpers\.ts''', '''RUN\.md''']

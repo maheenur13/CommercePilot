@@ -1,0 +1,74 @@
+generator client {
+  provider            = "prisma-client"
+  output              = "../src/generated/prisma"
+  moduleFormat        = "esm"
+  importFileExtension = "js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// Money is always stored as integer minor units (cents) to avoid float rounding.
+model Product {
+  id          String      @id @default(cuid())
+  sku         String      @unique
+  name        String
+  description String      @default("")
+  category    String
+  brand       String?
+  priceCents  Int
+  currency    String      @default("USD") @db.Char(3)
+  stock       Int         @default(0)
+  attributes  Json        @default("{}")
+  active      Boolean     @default(true)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  orderItems  OrderItem[]
+
+  @@index([category])
+  @@index([name])
+}
+
+model Customer {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  /// SHA-256 of the customer's API token; the raw token is never stored.
+  apiTokenHash String   @unique
+  createdAt    DateTime @default(now())
+  orders       Order[]
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  SHIPPED
+  CANCELLED
+}
+
+model Order {
+  id         String      @id @default(cuid())
+  customerId String
+  customer   Customer    @relation(fields: [customerId], references: [id])
+  status     OrderStatus @default(CONFIRMED)
+  totalCents Int
+  currency   String      @default("USD") @db.Char(3)
+  createdAt  DateTime    @default(now())
+  items      OrderItem[]
+
+  @@index([customerId, createdAt])
+}
+
+model OrderItem {
+  id             String  @id @default(cuid())
+  orderId        String
+  order          Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId      String
+  product        Product @relation(fields: [productId], references: [id])
+  quantity       Int
+  /// Price snapshot at order time; later catalog price changes don't rewrite history.
+  unitPriceCents Int
+
+  @@index([orderId])
+}

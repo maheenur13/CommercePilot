@@ -1,0 +1,14 @@
+node_modules
+dist
+coverage
+src/generated
+.git
+.env
+.env.*
+transcripts
+*.log
+submission.zip
+.claude
+.github
+tests
+docs

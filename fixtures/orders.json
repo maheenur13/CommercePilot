@@ -1,0 +1,42 @@
+[
+  {
+    "customer": "alice@example.com",
+    "status": "SHIPPED",
+    "daysAgo": 40,
+    "items": [
+      { "sku": "AUD-HP-001", "quantity": 1 },
+      { "sku": "CMP-HB-107", "quantity": 1 }
+    ]
+  },
+  {
+    "customer": "alice@example.com",
+    "status": "CONFIRMED",
+    "daysAgo": 3,
+    "items": [{ "sku": "HOM-CF-201", "quantity": 2 }]
+  },
+  {
+    "customer": "bob@example.com",
+    "status": "SHIPPED",
+    "daysAgo": 21,
+    "items": [
+      { "sku": "OUT-TN-301", "quantity": 1 },
+      { "sku": "OUT-HL-304", "quantity": 2 },
+      { "sku": "OUT-BT-305", "quantity": 2 }
+    ]
+  },
+  {
+    "customer": "bob@example.com",
+    "status": "CANCELLED",
+    "daysAgo": 10,
+    "items": [{ "sku": "FIT-WT-404", "quantity": 1 }]
+  },
+  {
+    "customer": "carol@example.com",
+    "status": "PENDING",
+    "daysAgo": 1,
+    "items": [
+      { "sku": "BKS-PR-501", "quantity": 1 },
+      { "sku": "BKS-PR-507", "quantity": 1 }
+    ]
+  }
+]

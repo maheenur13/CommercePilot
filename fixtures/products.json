@@ -1,0 +1,504 @@
+[
+  {
+    "sku": "AUD-HP-001",
+    "name": "Northwave ANC Over-Ear Headphones",
+    "category": "Audio",
+    "brand": "Northwave",
+    "priceCents": 19900,
+    "stock": 34,
+    "description": "Wireless over-ear headphones with hybrid active noise cancellation, 40-hour battery life and multipoint Bluetooth 5.3 pairing. Foldable with a hard travel case.",
+    "attributes": {
+      "batteryHours": 40,
+      "noiseCancelling": true,
+      "bluetooth": "5.3",
+      "weightGrams": 254,
+      "colors": "black, sand"
+    }
+  },
+  {
+    "sku": "AUD-EB-002",
+    "name": "Northwave Buds Pro",
+    "category": "Audio",
+    "brand": "Northwave",
+    "priceCents": 12900,
+    "stock": 58,
+    "description": "True wireless earbuds with ANC, transparency mode and IPX4 sweat resistance. 7 hours per charge, 28 hours with the wireless charging case.",
+    "attributes": {
+      "batteryHours": 28,
+      "noiseCancelling": true,
+      "waterResistance": "IPX4",
+      "wirelessCharging": true
+    }
+  },
+  {
+    "sku": "AUD-EB-003",
+    "name": "Pulse Sport Earbuds",
+    "category": "Audio",
+    "brand": "Pulse",
+    "priceCents": 4900,
+    "stock": 120,
+    "description": "Budget-friendly sport earbuds with secure ear hooks and IPX7 waterproofing. No noise cancellation. 9 hours per charge.",
+    "attributes": { "batteryHours": 9, "noiseCancelling": false, "waterResistance": "IPX7" }
+  },
+  {
+    "sku": "AUD-SP-004",
+    "name": "Pulse Boom Portable Speaker",
+    "category": "Audio",
+    "brand": "Pulse",
+    "priceCents": 7900,
+    "stock": 0,
+    "description": "Rugged portable Bluetooth speaker with 360-degree sound, IP67 dust and water protection and 15-hour battery. Floats in water.",
+    "attributes": { "batteryHours": 15, "waterResistance": "IP67", "weightGrams": 540 }
+  },
+  {
+    "sku": "AUD-SP-005",
+    "name": "Lumen Home Smart Speaker",
+    "category": "Audio",
+    "brand": "Lumen",
+    "priceCents": 9900,
+    "stock": 22,
+    "description": "Wi-Fi smart speaker with room-filling sound, voice assistant support and multi-room grouping. Mains powered.",
+    "attributes": { "wifi": true, "voiceAssistant": true, "powered": "mains" }
+  },
+  {
+    "sku": "AUD-HP-006",
+    "name": "Studio Monitor Wired Headphones",
+    "category": "Audio",
+    "brand": "Arcwell",
+    "priceCents": 8900,
+    "stock": 15,
+    "description": "Closed-back wired studio headphones with flat frequency response, detachable 3m cable and 6.35mm adapter. Ideal for mixing and podcasting.",
+    "attributes": { "wired": true, "impedanceOhms": 38, "cableMeters": 3 }
+  },
+  {
+    "sku": "AUD-SB-007",
+    "name": "Lumen Cinema Soundbar 3.1",
+    "category": "Audio",
+    "brand": "Lumen",
+    "priceCents": 34900,
+    "stock": 8,
+    "description": "3.1-channel soundbar with wireless subwoofer, Dolby Atmos virtualisation and HDMI eARC. Dialogue enhancement mode for clear speech.",
+    "attributes": { "channels": "3.1", "hdmiEarc": true, "dolbyAtmos": true }
+  },
+  {
+    "sku": "AUD-MIC-008",
+    "name": "Arcwell USB Podcast Microphone",
+    "category": "Audio",
+    "brand": "Arcwell",
+    "priceCents": 11900,
+    "stock": 27,
+    "description": "Cardioid USB-C condenser microphone with built-in headphone monitoring, mute button and desk stand.",
+    "attributes": { "connection": "USB-C", "pattern": "cardioid" }
+  },
+
+  {
+    "sku": "CMP-LT-101",
+    "name": "Arcwell Air 14 Laptop",
+    "category": "Computers",
+    "brand": "Arcwell",
+    "priceCents": 109900,
+    "stock": 12,
+    "description": "14-inch ultralight laptop, 16 GB RAM, 512 GB SSD, 2.8K OLED display and up to 15 hours battery. Weighs 1.1 kg.",
+    "attributes": {
+      "ramGb": 16,
+      "storageGb": 512,
+      "screenInches": 14,
+      "batteryHours": 15,
+      "weightKg": 1.1
+    }
+  },
+  {
+    "sku": "CMP-LT-102",
+    "name": "Arcwell Pro 16 Laptop",
+    "category": "Computers",
+    "brand": "Arcwell",
+    "priceCents": 219900,
+    "stock": 5,
+    "description": "16-inch performance laptop with 32 GB RAM, 1 TB SSD, dedicated graphics and a 120 Hz mini-LED display. Built for video editing and development.",
+    "attributes": { "ramGb": 32, "storageGb": 1024, "screenInches": 16, "dedicatedGpu": true }
+  },
+  {
+    "sku": "CMP-LT-103",
+    "name": "Kestrel Chromebook 12",
+    "category": "Computers",
+    "brand": "Kestrel",
+    "priceCents": 32900,
+    "stock": 40,
+    "description": "Affordable 12-inch Chromebook for school and browsing. 8 GB RAM, 128 GB storage, 12-hour battery, spill-resistant keyboard.",
+    "attributes": { "ramGb": 8, "storageGb": 128, "screenInches": 12, "batteryHours": 12 }
+  },
+  {
+    "sku": "CMP-MN-104",
+    "name": "Kestrel 27\" 4K Monitor",
+    "category": "Computers",
+    "brand": "Kestrel",
+    "priceCents": 39900,
+    "stock": 18,
+    "description": "27-inch 4K IPS monitor with USB-C 65W power delivery, height-adjustable stand and factory colour calibration.",
+    "attributes": { "screenInches": 27, "resolution": "3840x2160", "usbCPowerWatts": 65 }
+  },
+  {
+    "sku": "CMP-KB-105",
+    "name": "Arcwell Mechanical Keyboard TKL",
+    "category": "Computers",
+    "brand": "Arcwell",
+    "priceCents": 12900,
+    "stock": 0,
+    "description": "Tenkeyless mechanical keyboard with hot-swappable tactile switches, PBT keycaps and wireless/USB-C dual mode.",
+    "attributes": { "layout": "TKL", "wireless": true, "switches": "tactile" }
+  },
+  {
+    "sku": "CMP-MS-106",
+    "name": "Kestrel Ergo Wireless Mouse",
+    "category": "Computers",
+    "brand": "Kestrel",
+    "priceCents": 5900,
+    "stock": 75,
+    "description": "Vertical ergonomic mouse that reduces wrist strain. Silent clicks, 3 device pairing, rechargeable over USB-C.",
+    "attributes": { "wireless": true, "ergonomic": true }
+  },
+  {
+    "sku": "CMP-HB-107",
+    "name": "Arcwell 8-in-1 USB-C Hub",
+    "category": "Computers",
+    "brand": "Arcwell",
+    "priceCents": 6900,
+    "stock": 64,
+    "description": "USB-C hub with HDMI 4K60, 2x USB-A, USB-C PD 100W pass-through, SD/microSD readers and gigabit Ethernet.",
+    "attributes": { "ports": 8, "hdmi": "4K60", "ethernet": true }
+  },
+  {
+    "sku": "CMP-SSD-108",
+    "name": "Kestrel Portable SSD 1TB",
+    "category": "Computers",
+    "brand": "Kestrel",
+    "priceCents": 10900,
+    "stock": 33,
+    "description": "Pocket-sized external SSD with up to 1050 MB/s transfer speeds, drop resistant to 2 m, USB-C.",
+    "attributes": { "storageGb": 1024, "speedMBs": 1050 }
+  },
+
+  {
+    "sku": "HOM-CF-201",
+    "name": "Brewcraft Pour-Over Coffee Kit",
+    "category": "Home & Kitchen",
+    "brand": "Brewcraft",
+    "priceCents": 4500,
+    "stock": 46,
+    "description": "Ceramic pour-over dripper, glass carafe (600 ml) and 100 paper filters. Makes 1-4 cups.",
+    "attributes": { "material": "ceramic, glass", "capacityMl": 600 }
+  },
+  {
+    "sku": "HOM-CF-202",
+    "name": "Brewcraft Burr Coffee Grinder",
+    "category": "Home & Kitchen",
+    "brand": "Brewcraft",
+    "priceCents": 13900,
+    "stock": 19,
+    "description": "Electric conical burr grinder with 40 grind settings from espresso to French press. Low-retention design.",
+    "attributes": { "grindSettings": 40, "burr": "conical steel" }
+  },
+  {
+    "sku": "HOM-CF-203",
+    "name": "Brewcraft Espresso Machine Duo",
+    "category": "Home & Kitchen",
+    "brand": "Brewcraft",
+    "priceCents": 49900,
+    "stock": 6,
+    "description": "Semi-automatic espresso machine with PID temperature control, 15 bar pump and steam wand for milk frothing.",
+    "attributes": { "pumpBar": 15, "pid": true, "milkFrother": true }
+  },
+  {
+    "sku": "HOM-KT-204",
+    "name": "Ferro Cast Iron Skillet 26cm",
+    "category": "Home & Kitchen",
+    "brand": "Ferro",
+    "priceCents": 3900,
+    "stock": 88,
+    "description": "Pre-seasoned cast iron skillet, oven safe to 260°C, suitable for induction, gas and campfire.",
+    "attributes": { "diameterCm": 26, "induction": true, "ovenSafeC": 260 }
+  },
+  {
+    "sku": "HOM-KT-205",
+    "name": "Ferro Non-Stick Pan Set (3 pcs)",
+    "category": "Home & Kitchen",
+    "brand": "Ferro",
+    "priceCents": 8900,
+    "stock": 25,
+    "description": "20/24/28 cm aluminium pans with PFAS-free ceramic non-stick coating. Dishwasher safe, induction compatible.",
+    "attributes": { "pieces": 3, "pfasFree": true, "induction": true, "dishwasherSafe": true }
+  },
+  {
+    "sku": "HOM-AP-206",
+    "name": "Lumen Air Purifier 300",
+    "category": "Home & Kitchen",
+    "brand": "Lumen",
+    "priceCents": 18900,
+    "stock": 14,
+    "description": "HEPA H13 air purifier for rooms up to 40 m², with air quality sensor and 24 dB sleep mode.",
+    "attributes": { "roomSizeM2": 40, "filter": "HEPA H13", "noiseDb": 24 }
+  },
+  {
+    "sku": "HOM-VC-207",
+    "name": "Lumen Robot Vacuum S2",
+    "category": "Home & Kitchen",
+    "brand": "Lumen",
+    "priceCents": 29900,
+    "stock": 0,
+    "description": "Lidar-navigation robot vacuum with mopping pad, app-controlled no-go zones and 150-minute runtime.",
+    "attributes": { "navigation": "lidar", "mopping": true, "runtimeMinutes": 150 }
+  },
+  {
+    "sku": "HOM-KT-208",
+    "name": "Ferro Chef's Knife 20cm",
+    "category": "Home & Kitchen",
+    "brand": "Ferro",
+    "priceCents": 6900,
+    "stock": 31,
+    "description": "Forged high-carbon stainless steel chef's knife with full tang and pakkawood handle.",
+    "attributes": { "bladeCm": 20, "steel": "high-carbon stainless" }
+  },
+
+  {
+    "sku": "OUT-TN-301",
+    "name": "Summit 2-Person Backpacking Tent",
+    "category": "Outdoors",
+    "brand": "Summit",
+    "priceCents": 27900,
+    "stock": 11,
+    "description": "Freestanding 3-season tent weighing 1.6 kg with two doors, two vestibules and 3000 mm waterproof fly.",
+    "attributes": { "persons": 2, "weightKg": 1.6, "seasons": 3, "waterproofMm": 3000 }
+  },
+  {
+    "sku": "OUT-SB-302",
+    "name": "Summit Down Sleeping Bag -5°C",
+    "category": "Outdoors",
+    "brand": "Summit",
+    "priceCents": 22900,
+    "stock": 9,
+    "description": "800-fill responsibly sourced down mummy bag, comfort rating 0°C, limit -5°C, packs to the size of a water bottle.",
+    "attributes": { "comfortC": 0, "limitC": -5, "fill": "800 down" }
+  },
+  {
+    "sku": "OUT-BP-303",
+    "name": "Summit Trail 30L Daypack",
+    "category": "Outdoors",
+    "brand": "Summit",
+    "priceCents": 8900,
+    "stock": 52,
+    "description": "30-litre hiking daypack with ventilated back panel, hydration sleeve and integrated rain cover.",
+    "attributes": { "litres": 30, "rainCover": true, "hydrationSleeve": true }
+  },
+  {
+    "sku": "OUT-HL-304",
+    "name": "Glowline Rechargeable Headlamp",
+    "category": "Outdoors",
+    "brand": "Glowline",
+    "priceCents": 3900,
+    "stock": 140,
+    "description": "400-lumen USB-C rechargeable headlamp with red night mode and IPX6 water resistance.",
+    "attributes": { "lumens": 400, "waterResistance": "IPX6", "rechargeable": true }
+  },
+  {
+    "sku": "OUT-BT-305",
+    "name": "Summit Insulated Bottle 750ml",
+    "category": "Outdoors",
+    "brand": "Summit",
+    "priceCents": 2900,
+    "stock": 200,
+    "description": "Double-wall vacuum insulated stainless steel bottle, keeps drinks cold 24 h or hot 12 h. BPA free.",
+    "attributes": { "capacityMl": 750, "coldHours": 24, "hotHours": 12 }
+  },
+  {
+    "sku": "OUT-ST-306",
+    "name": "Glowline Camping Stove Mini",
+    "category": "Outdoors",
+    "brand": "Glowline",
+    "priceCents": 4900,
+    "stock": 37,
+    "description": "Ultralight 85 g canister stove with piezo ignition, boils 1 litre in 3.5 minutes.",
+    "attributes": { "weightGrams": 85, "boilMinutesPerLitre": 3.5 }
+  },
+  {
+    "sku": "OUT-JK-307",
+    "name": "Summit Rain Shell Jacket",
+    "category": "Outdoors",
+    "brand": "Summit",
+    "priceCents": 15900,
+    "stock": 23,
+    "description": "Waterproof breathable 3-layer shell jacket with pit zips and helmet-compatible hood. Sizes XS-XXL.",
+    "attributes": { "waterproofMm": 20000, "sizes": "XS,S,M,L,XL,XXL" }
+  },
+  {
+    "sku": "OUT-PL-308",
+    "name": "Summit Carbon Trekking Poles",
+    "category": "Outdoors",
+    "brand": "Summit",
+    "priceCents": 11900,
+    "stock": 0,
+    "description": "Pair of carbon fibre trekking poles, 3-section fold, 115-135 cm adjustable, 220 g per pole.",
+    "attributes": { "material": "carbon", "lengthCm": "115-135" }
+  },
+
+  {
+    "sku": "FIT-MT-401",
+    "name": "Vigor Yoga Mat 6mm",
+    "category": "Fitness",
+    "brand": "Vigor",
+    "priceCents": 3900,
+    "stock": 95,
+    "description": "Non-slip natural rubber yoga mat, 183 x 61 cm, 6 mm cushioning with alignment lines.",
+    "attributes": { "thicknessMm": 6, "material": "natural rubber" }
+  },
+  {
+    "sku": "FIT-DB-402",
+    "name": "Vigor Adjustable Dumbbells 2-24kg (pair)",
+    "category": "Fitness",
+    "brand": "Vigor",
+    "priceCents": 32900,
+    "stock": 7,
+    "description": "Space-saving adjustable dumbbell pair, dial selects 2-24 kg in 15 increments. Replaces 15 sets of weights.",
+    "attributes": { "minKg": 2, "maxKg": 24, "increments": 15 }
+  },
+  {
+    "sku": "FIT-RB-403",
+    "name": "Vigor Resistance Band Set",
+    "category": "Fitness",
+    "brand": "Vigor",
+    "priceCents": 2400,
+    "stock": 160,
+    "description": "Five latex-free resistance bands from extra light to extra heavy, with door anchor and carry bag.",
+    "attributes": { "bands": 5, "latexFree": true }
+  },
+  {
+    "sku": "FIT-WT-404",
+    "name": "Pulse Fit Smartwatch",
+    "category": "Fitness",
+    "brand": "Pulse",
+    "priceCents": 17900,
+    "stock": 29,
+    "description": "GPS fitness smartwatch with heart-rate and SpO2 sensors, 100+ sport modes, 5 ATM water resistance and 10-day battery.",
+    "attributes": { "gps": true, "batteryDays": 10, "waterResistance": "5 ATM" }
+  },
+  {
+    "sku": "FIT-FR-405",
+    "name": "Vigor Foam Roller",
+    "category": "Fitness",
+    "brand": "Vigor",
+    "priceCents": 2900,
+    "stock": 70,
+    "description": "High-density textured foam roller (33 cm) for muscle recovery and mobility work.",
+    "attributes": { "lengthCm": 33 }
+  },
+  {
+    "sku": "FIT-JR-406",
+    "name": "Vigor Speed Jump Rope",
+    "category": "Fitness",
+    "brand": "Vigor",
+    "priceCents": 1500,
+    "stock": 0,
+    "description": "Adjustable steel-cable speed rope with ball-bearing handles for double-unders.",
+    "attributes": { "adjustable": true }
+  },
+  {
+    "sku": "FIT-BK-407",
+    "name": "Vigor Indoor Cycling Bike",
+    "category": "Fitness",
+    "brand": "Vigor",
+    "priceCents": 69900,
+    "stock": 3,
+    "description": "Magnetic resistance indoor bike with 32 levels, belt drive and tablet holder. Max user weight 125 kg.",
+    "attributes": { "resistanceLevels": 32, "maxUserKg": 125 }
+  },
+  {
+    "sku": "FIT-SC-408",
+    "name": "Vigor Smart Body Scale",
+    "category": "Fitness",
+    "brand": "Vigor",
+    "priceCents": 4900,
+    "stock": 48,
+    "description": "Wi-Fi body composition scale measuring weight, body fat and muscle mass, syncs with fitness apps.",
+    "attributes": { "wifi": true }
+  },
+
+  {
+    "sku": "BKS-PR-501",
+    "name": "Clean Architecture in Practice (Paperback)",
+    "category": "Books",
+    "brand": "Inkwell Press",
+    "priceCents": 3900,
+    "stock": 44,
+    "description": "Practical guide to structuring maintainable backend systems, with worked examples in TypeScript.",
+    "attributes": { "pages": 412, "format": "paperback", "language": "English" }
+  },
+  {
+    "sku": "BKS-PR-502",
+    "name": "The Pragmatic Data Engineer (Hardcover)",
+    "category": "Books",
+    "brand": "Inkwell Press",
+    "priceCents": 4900,
+    "stock": 17,
+    "description": "Patterns for building reliable data pipelines: ingestion, validation, idempotency and observability.",
+    "attributes": { "pages": 368, "format": "hardcover", "language": "English" }
+  },
+  {
+    "sku": "BKS-CK-503",
+    "name": "Weeknight Plant-Based Cooking",
+    "category": "Books",
+    "brand": "Greenleaf",
+    "priceCents": 2900,
+    "stock": 60,
+    "description": "120 vegetarian and vegan recipes that take 30 minutes or less. Photo for every recipe.",
+    "attributes": { "pages": 256, "format": "hardcover", "recipes": 120 }
+  },
+  {
+    "sku": "BKS-TR-504",
+    "name": "Hiking the Northern Ridges Guidebook",
+    "category": "Books",
+    "brand": "Greenleaf",
+    "priceCents": 2400,
+    "stock": 0,
+    "description": "Trail guide with 50 day hikes, elevation profiles and offline map codes.",
+    "attributes": { "pages": 224, "format": "paperback", "routes": 50 }
+  },
+  {
+    "sku": "BKS-FC-505",
+    "name": "The Lighthouse Keeper's Daughter (Novel)",
+    "category": "Books",
+    "brand": "Inkwell Press",
+    "priceCents": 1800,
+    "stock": 85,
+    "description": "Award-winning literary novel about family secrets on a remote northern island.",
+    "attributes": { "pages": 330, "format": "paperback", "genre": "literary fiction" }
+  },
+  {
+    "sku": "BKS-KD-506",
+    "name": "Starlight Picture Book Collection",
+    "category": "Books",
+    "brand": "Greenleaf",
+    "priceCents": 3200,
+    "stock": 21,
+    "description": "Box set of four illustrated bedtime stories for ages 3-6.",
+    "attributes": { "books": 4, "ageRange": "3-6" }
+  },
+  {
+    "sku": "BKS-PR-507",
+    "name": "Designing LLM Applications (Paperback)",
+    "category": "Books",
+    "brand": "Inkwell Press",
+    "priceCents": 4400,
+    "stock": 30,
+    "description": "Engineering guide to tool calling, retrieval, evaluation and guardrails for language-model products.",
+    "attributes": { "pages": 298, "format": "paperback", "language": "English" }
+  },
+  {
+    "sku": "BKS-NB-508",
+    "name": "Inkwell Dotted Notebook A5",
+    "category": "Books",
+    "brand": "Inkwell Press",
+    "priceCents": 1400,
+    "stock": 150,
+    "description": "A5 hardcover dotted notebook, 192 pages of 120 gsm fountain-pen friendly paper.",
+    "attributes": { "pages": 192, "paperGsm": 120 }
+  }
+]
